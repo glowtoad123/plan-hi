@@ -1,11 +1,11 @@
-.container {
+/* .container {
   min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .main {
   padding: 5rem 0;
@@ -80,7 +80,7 @@
   margin-top: 3rem;
 }
 
-.card {
+/* .card {
   margin: 1rem;
   flex-basis: 45%;
   padding: 1.5rem;
@@ -90,14 +90,35 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+} */
+
+.card {
+  width: 11%;
+  display: inline-block;
+  margin: 5px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  background-color: #D8DBE2;
+  color: #292E3B;
 }
 
-.card:hover,
+.card:hover {
+  box-shadow: 10px 15px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card:active {
+  background-color: #1b1e27;
+  color: white
+}
+
+/* .card:hover,
 .card:focus,
 .card:active {
   color: #0070f3;
   border-color: #0070f3;
-}
+} */
 
 .card h3 {
   margin: 0 0 1rem 0;
@@ -112,6 +133,12 @@
 
 .logo {
   height: 1em;
+}
+
+.month {
+  text-align: center;
+  color: #A7A9AF;
+  margin-bottom: 0;
 }
 
 @media (max-width: 600px) {
