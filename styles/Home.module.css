@@ -146,4 +146,23 @@
     width: 100%;
     flex-direction: column;
   }
+
+  .card {
+    width: 11%;
+    display: inline-block;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    background-color: #D8DBE2;
+    color: #292E3B;
+  }
+
+  .month {
+    text-align: center;
+    color: #A7A9AF;
+    margin-bottom: 0;
+    font-size: 12px;
+  }
 }

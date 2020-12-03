@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { dateList } from '../components/microcomponents/dates'
 import Nav from '../components/nav'
@@ -7,13 +8,15 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
-  useEffect(() => {console.log(document.cookie)}, [])
   const today = new Date()
   var month = today.getMonth()
   var possibleNewMonth = month + 1
   var year = today.getFullYear()
   var day = today.getUTCDay()
   const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getUTCMonth())
+  const [yourId, setYourId] = useState("")
+
+  useEffect(() => {setYourId(localStorage.getItem("userID"))}, [])
 
   console.log(today)
   console.log(today.getFullYear())
@@ -42,12 +45,12 @@ export default function Home() {
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
       if(possibleNewMonth > 11){
-        if(newDay >= 6){
+        if(newDay >= 7){
           thisWeek.push({
             date: daysInTheWeek - 31,
             month: 0,
             year: year + 1,
-            day: newDay - 6
+            day: newDay - 7
           })
           } else {
             thisWeek.push({
@@ -57,12 +60,12 @@ export default function Home() {
               day: newDay
             })
           }
-      } else if(newDay >= 6) {
+      } else if(newDay >= 7) {
         thisWeek.push({
           date: daysInTheWeek - 31,
           month: 0,
           year: year,
-          day: newDay - 6
+          day: newDay - 7
         })
       } else {
           thisWeek.push({
@@ -79,7 +82,7 @@ export default function Home() {
             date: daysInTheWeek - 30,
             month: 0,
             year: year + 1,
-            day: newDay - 6
+            day: newDay - 7
           })
         } else {
           thisWeek.push({
@@ -89,12 +92,12 @@ export default function Home() {
             day: newDay
           })
         }
-      } else if(newDay >= 6) {
+      } else if(newDay >= 7) {
         thisWeek.push({
           date: daysInTheWeek - 30,
           month: possibleNewMonth,
           year: year,
-          day: newDay - 6
+          day: newDay - 7
         })
       } else {
         thisWeek.push({
@@ -104,12 +107,12 @@ export default function Home() {
           day: newDay
         })
       }
-    } else if(newDay >= 6){
+    } else if(newDay >= 7){
       thisWeek.push({
         date: daysInTheWeek,
         month: month,
         year: year,
-        day: newDay - 6
+        day: newDay - 7
       })
     } else {
       thisWeek.push({
@@ -146,31 +149,35 @@ export default function Home() {
     thatWeek.length = one.length
   ))))
   
-  thisWeek.forEach(thatWeek => thatWeek.day === 0 ? thatWeek.dayName = "Sunday" : 
-    thatWeek.day === 1 ? thatWeek.dayName = "monday" :
-    thatWeek.day === 2 ? thatWeek.dayName = "Tuesday" : 
-    thatWeek.day === 3 ? thatWeek.dayName = "Wednesday" : 
-    thatWeek.day === 4 ? thatWeek.dayName = "Thursday" : 
-    thatWeek.day === 5 ? thatWeek.dayName = "Friday" : 
-    thatWeek.day === 6 ? thatWeek.dayName = "Saturday" :
-    thatWeek.dayName = "No Day"
+  thisWeek.forEach(thatWeek => thatWeek.day === 0 ? thatWeek.dayName = "Sun" : 
+    thatWeek.day === 1 ? thatWeek.dayName = "Mon" :
+    thatWeek.day === 2 ? thatWeek.dayName = "Tues" : 
+    thatWeek.day === 3 ? thatWeek.dayName = "Wed" : 
+    thatWeek.day === 4 ? thatWeek.dayName = "Thu" : 
+    thatWeek.day === 5 ? thatWeek.dayName = "Fri" : 
+    thatWeek.day === 6 ? thatWeek.dayName = "Sat" :
+    thatWeek.dayName = "day"
   )
 
   console.log(thisWeek)
 
-
+  
 
   return (
     <faunaProvider>
       <Nav />
-
+      <h1 style={{color: "#292E3B"}}>Dashboard</h1>
+      <p>Select Date to create Event</p>
       {thisWeek.map(eachDay => 
-          <div className={styles.card}>
-            <h1>{eachDay.date}</h1>
-            <h2>{eachDay.dayName}</h2>
-            <h5 className={styles.month}>{eachDay.month}</h5>
-          </div>
+          <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
+            <div className={styles.card}>
+              <h1>{eachDay.date}</h1>
+              <h2>{eachDay.dayName}</h2>
+              <h5 className={styles.month}>{eachDay.month}</h5>
+            </div>
+          </Link>
       )}
+      <h1 style={{color: "#292E3B"}}>Events</h1>
     </faunaProvider>
   )
 }

@@ -4,6 +4,12 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #F3F5FF;
+}
+
+p {
+  font-weight: bold;
+  color:  #A7A9AF;
 }
 
 svg {
@@ -100,3 +106,54 @@ a {
   font-weight: bold;
 }
 
+.eventForm {
+  border: none;
+  border-radius: 12px 12px 0 0;
+  background-color: #D8DBE2;
+  width: 90%;
+  margin: auto;
+}
+
+.eventNameInput {
+  display: block;
+  border-radius: 12px 12px 0 0;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #373F51;
+  box-shadow: 0 4px 4px rgba(0,0,0,.25);
+}
+
+.eventDateInput {
+  width: 20%;
+  height: 41px;
+  display: block;
+  margin-right: 10px;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  
+}
+
+.eventSubmitButton {
+  background-color: #373F51;
+  color: #fff;
+  border: none;
+  border-radius: 0 0 12px 12px;
+  padding: 10px;
+  vertical-align: middle;
+  width: -webkit-fill-available;
+  width: -moz-available;
+}
+
+.eventSubmitButton:hover {
+  background-color: #292e3b;
+}
+
+.eventSubmitButton:active {
+  background-color:  #1b1e27;
+}

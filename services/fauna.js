@@ -15,7 +15,8 @@ export function login(email, password) {
             account.email = ret.data.email
             account.password = ret.data.password
             account.id = ret.ref.id
-            document.cookie = `userId=${ret.ref.id}`
+            localStorage.setItem("userID", ret.ref.id)
+            /* document.cookie = `userId=${ret.ref.id}` */
         })
     } catch(error) {
         console.log(error)
@@ -36,7 +37,8 @@ export function register(email, password) {
                 account.email = ret.data.email
                 account.password = ret.data.password
                 account.id = ret.ref.id
-                document.cookie = `userId=${ret.ref.id}`
+                localStorage.setItem("userID", ret.ref.id)
+                /* document.cookie = `userId=${ret.ref.id}` */
             })
         } catch(error) {
         console.log(error)
@@ -50,3 +52,6 @@ export function register(email, password) {
 export const secret = 'fnAD78kV2eACAgU-gPzu-xXGDI8vFW0M8GsLREYY'
 
 export const accountCred = account
+
+export const Q = q
+export const cli = client
