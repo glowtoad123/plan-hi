@@ -15,23 +15,24 @@ export default function Home() {
   var day = today.getUTCDay()
   const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getUTCMonth())
   const [yourId, setYourId] = useState("")
+  const [eventList, setEventList] = useState("")
+  var filteredEvents
 
-  useEffect(() => {setYourId(localStorage.getItem("userID"))}, [])
-
+  
   console.log(today)
   console.log(today.getFullYear())
   console.log(today.getMonth())
   console.log(today.getUTCDate())
   console.log(today.getUTCDay())
-
+  
   const date = today.getUTCDate()
   var daysInTheWeek
   const week = date + 6
   var lastDay
   var brandnewMonth
   var thisWeek = []
-
-/*   if(currentMonth[0].length === 31 && week > 31) {
+  
+  /*   if(currentMonth[0].length === 31 && week > 31) {
     lastDay = week - 31
     if(month + 1 > 11){
       year = year + 1
@@ -40,7 +41,7 @@ export default function Home() {
       month = 1
     }
   } */
-
+  
   for(daysInTheWeek = today.getUTCDate(); daysInTheWeek <= week; daysInTheWeek++){
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
@@ -52,14 +53,14 @@ export default function Home() {
             year: year + 1,
             day: newDay - 7
           })
-          } else {
-            thisWeek.push({
-              date: daysInTheWeek - 31,
-              month: possibleNewMonth,
-              year: year + 1,
-              day: newDay
-            })
-          }
+        } else {
+          thisWeek.push({
+            date: daysInTheWeek - 31,
+            month: possibleNewMonth,
+            year: year + 1,
+            day: newDay
+          })
+        }
       } else if(newDay >= 7) {
         thisWeek.push({
           date: daysInTheWeek - 31,
@@ -68,12 +69,12 @@ export default function Home() {
           day: newDay - 7
         })
       } else {
-          thisWeek.push({
-            date: daysInTheWeek - 31,
-            month: possibleNewMonth,
-            year: year,
-            day: newDay
-          })
+        thisWeek.push({
+          date: daysInTheWeek - 31,
+          month: possibleNewMonth,
+          year: year,
+          day: newDay
+        })
       }
     } else if(currentMonth[0].length === 30 && daysInTheWeek > 30) {
       if(possibleNewMonth > 11){
@@ -123,19 +124,19 @@ export default function Home() {
       })
     }
   }
-
+  
   console.log(today)
   console.log(currentMonth[0].length)
   console.log(thisWeek)
-
+  
   const results = thisWeek.map(thatWeek => 
     dateList[thatWeek.year].filter(property => 
       thatWeek.month === property.numMonth
-    )
-  )
-
+      )
+      )
+      
   console.log(results)
-
+  
 
   thisWeek.map(thatWeek => console.log(thatWeek.year))
 
@@ -150,18 +151,36 @@ export default function Home() {
   ))))
   
   thisWeek.forEach(thatWeek => thatWeek.day === 0 ? thatWeek.dayName = "Sun" : 
-    thatWeek.day === 1 ? thatWeek.dayName = "Mon" :
+  thatWeek.day === 1 ? thatWeek.dayName = "Mon" :
     thatWeek.day === 2 ? thatWeek.dayName = "Tues" : 
     thatWeek.day === 3 ? thatWeek.dayName = "Wed" : 
     thatWeek.day === 4 ? thatWeek.dayName = "Thu" : 
     thatWeek.day === 5 ? thatWeek.dayName = "Fri" : 
     thatWeek.day === 6 ? thatWeek.dayName = "Sat" :
     thatWeek.dayName = "day"
-  )
+    )
+    
+    console.log(thisWeek)
 
-  console.log(thisWeek)
+    async function getData() {
+      const res = await fetch("api/readEvents")
+      let data = await res.json()
+      setEventList(data)
+    }
+    
+    useEffect(() => {
+      setYourId(localStorage.getItem("userID"))
+      getData()
+    }, [])
 
-  
+    console.log(eventList)
+
+    eventList ? thisWeek.map(thatWeek => eventList.filter(anEvent => anEvent.year === thatWeek.year)) : filteredEvents = []
+    /* eventList ? eventList.filter(anEvent => thisWeek.map(thatWeek => anEvent.data.year === thatWeek.year)) : filteredEvents = [] */
+    
+    
+    /* eventList ? filteredEvents = eventList.filter(anEvent => anEvent.data.year === 2020) : filteredEvents = [] */
+    console.log(filteredEvents)
 
   return (
     <faunaProvider>

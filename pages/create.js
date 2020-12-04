@@ -32,6 +32,26 @@ export default function Create() {
     const month = eventDate.split("-")[1]
     console.log("Month: " + month)
 
+    var monthName
+
+    console.log(Number(month) - 1)
+
+    Number(month) - 1 === 0 ? monthName = "January" :
+    Number(month) - 1 === 1 ? monthName = "Febrary" :
+    Number(month) - 1 === 2 ? monthName = "March" :
+    Number(month) - 1 === 3 ? monthName = "April" :
+    Number(month) - 1 === 4 ? monthName = "May" :
+    Number(month) - 1 === 5 ? monthName = "June" :
+    Number(month) - 1 === 6 ? monthName = "July" :
+    Number(month) - 1 === 7 ? monthName = "August" :
+    Number(month) - 1 === 8 ? monthName = "September" :
+    Number(month) - 1 === 9 ? monthName = "October" :
+    Number(month) - 1 === 10 ? monthName = "November" :
+    Number(month) - 1 === 11 ? monthName = "December" :
+    monthName = "No Month"
+
+    console.log(monthName)
+
     useEffect(() => {
         setYourId(localStorage.getItem("userID"))
     }, [])
@@ -41,10 +61,11 @@ export default function Create() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({data: {
             event: eventName,
-            date: eventDate,
-            month: eventDate.split("-")[1],
-            day: eventDate.split("-")[2],
-            year: eventDate.split("-")[0],
+            date: new Date(Number(eventDate.split("-")[0]), Number(eventDate.split("-")[1]), Number(eventDate.split("-")[2])),
+            month: Number(eventDate.split("-")[1]),
+            monthName: monthName,
+            day: Number(eventDate.split("-")[2]),
+            year: Number(eventDate.split("-")[0]),
             start: startEventTime,
             end: endEventTime,
             userID: yourId

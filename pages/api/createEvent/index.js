@@ -18,6 +18,7 @@ module.exports = async function(req, res) {
                         end: formData.end,
                         userID: formData.userID,
                         month: formData.month,
+                        monthName: formData.monthName,
                         year: formData.year,
                         day: formData.day
                     }

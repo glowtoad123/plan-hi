@@ -10,12 +10,12 @@ module.exports = async function(req, res){
                 q.Paginate(
                     q.Match(
                         q.Index('allEvents')
+                    )
                     ),
                     (ref) => q.Get(ref)
-                )
             )
         )
-        res.status(200).json(dsb.data)
+        res.status(200).json(dbs.data)
     }catch(error) {
         res.status(500).json({Error: error, message})
     }
