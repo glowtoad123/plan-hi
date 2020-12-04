@@ -131,6 +131,46 @@
   line-height: 1.5;
 }
 
+.eventCard {
+  width: max-content;
+  display: inline-block;
+  margin: 5px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  background-color: #D8DBE2;
+  color: #292E3B;
+  height: 11%;
+}
+
+.eventCard:hover {
+  box-shadow: 10px 15px 4px rgba(0, 0, 0, 0.25);
+}
+
+.eventCard:active {
+  background-color: #1b1e27;
+  color: white
+}
+
+.event:active p h2 h5 {
+  color: #A7A9AF
+}
+
+.eventCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: #292E3B
+}
+
+.eventCard p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: #292E3B
+
+}
+
 .logo {
   height: 1em;
 }
@@ -139,6 +179,13 @@
   text-align: center;
   color: #A7A9AF;
   margin-bottom: 0;
+}
+
+.options {
+  width: 24px;
+  height: 24px;
+  margin: auto;
+  display: inline-flex
 }
 
 @media (max-width: 600px) {

@@ -73,7 +73,10 @@ export default function Create() {
       }
 
     async function addData(){
-      await fetch("api/createEvent", requestOptions).then(() => console.log("this is working")).catch(e => console.log(e));
+      await fetch("api/createEvent", requestOptions).then(() => {
+          console.log("this is working")
+          router.push("/")
+        }).catch(e => console.log(e));
     }
 
 
@@ -89,7 +92,7 @@ export default function Create() {
                 <br />
                 <label>End</label><input type="time" value={endEventTime} onChange={event => setEndEventTime(event.target.value)} className="eventDateInput" name="end" />
                 <br />
-                <button type="submit" className="eventSubmitButton" onClick={() => {addData(), router.push("/")}}>Add Event</button>
+                <button type="submit" className="eventSubmitButton" onClick={() => addData()}>Add Event</button>
             </div>
         </>
     )
