@@ -203,9 +203,11 @@ export default function Home() {
       anEvent.data.monthName === thatWeek.month && anEvent.data.year === thatWeek.year && anEvent.data.day === thatWeek.date)) : filteredEvents = []
 
     console.log(filteredEvents)
+    filteredEvents.map(one => one.map(each => weeksEvents.push(each)))
+    /* console.log(testArray)
     
     filteredEvents = filteredEvents.slice(0, 1)
-    filteredEvents.map(one => one.map(each => weeksEvents.push(each)))
+    filteredEvents.map(one => one.map(each => weeksEvents.push(each))) */
 
     console.log(weeksEvents)
     console.log(filteredEvents)
