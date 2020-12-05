@@ -16,6 +16,7 @@ export default function Home() {
   const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getUTCMonth())
   const [yourId, setYourId] = useState("")
   const [eventList, setEventList] = useState("")
+  const [yourEvents, setYourEvents] = useState([])
   var filteredEvents
   var thisWeeksYearList = []
   var thisWeeksDayList = []
@@ -174,10 +175,24 @@ export default function Home() {
       let data = await res.json()
       setEventList(data)
     }
+
+    async function getYourData(id){
+      const res = await fetch("api/readYourEvents", {
+        method: "POST",
+        headers: {"Content-Type": 'application/json'},
+        body: JSON.stringify({id: id})
+      })
+      let data = await res.json()
+      console.log(data)
+      setYourEvents(data)
+    }
+
+    console.log(yourEvents)
     
     useEffect(() => {
       setYourId(localStorage.getItem("userID"))
       getData()
+      getYourData(localStorage.getItem("userID"))
     }, [])
 
     console.log(eventList)
@@ -200,7 +215,7 @@ export default function Home() {
 
     })) : filteredEvents = [] */
 
-    eventList ? filteredEvents = thisWeek.map(thatWeek => eventList.filter(anEvent => 
+    yourEvents ? filteredEvents = thisWeek.map(thatWeek => yourEvents.filter(anEvent => 
       anEvent.data.monthName === thatWeek.month && anEvent.data.year === thatWeek.year && anEvent.data.day === thatWeek.date)) : filteredEvents = []
 
     console.log(filteredEvents)
@@ -254,7 +269,7 @@ export default function Home() {
     <faunaProvider>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
-      <p>Select Date to create Event</p>
+      <p>Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
       {thisWeek && thisWeek.map(eachDay => 
           eachDay.date !== date ? 
           <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>

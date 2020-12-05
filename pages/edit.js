@@ -93,7 +93,7 @@ export default function Edit() {
             <br />
             <label>End</label><input type="time" value={end} onChange={event => setEnd(event.target.value)} className="eventDateInput" name="end" />
             <br />
-            <button type="submit" className="eventSubmitButton" onClick={() => addData()} >Add Event</button>
+            <button type="submit" className="eventSubmitButton" onClick={() => addData()} >Edit Event</button>
         </div>
     </>
     )
