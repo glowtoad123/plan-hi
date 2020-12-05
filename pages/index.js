@@ -12,7 +12,7 @@ export default function Home() {
   var month = today.getMonth()
   var possibleNewMonth = month + 1
   var year = today.getFullYear()
-  var day = today.getUTCDay()
+  var day = today.getDay()
   const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getUTCMonth())
   const [yourId, setYourId] = useState("")
   const [eventList, setEventList] = useState("")
@@ -30,7 +30,7 @@ export default function Home() {
   console.log(today.getUTCDate())
   console.log(today.getUTCDay())
   
-  const date = today.getUTCDate()
+  const date = today.getDate()
   var daysInTheWeek
   const week = date + 6
   var lastDay
@@ -49,7 +49,7 @@ export default function Home() {
     }
   } */
   
-  for(daysInTheWeek = today.getUTCDate(); daysInTheWeek <= week; daysInTheWeek++){
+  for(daysInTheWeek = today.getDate(); daysInTheWeek <= week; daysInTheWeek++){
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
       if(possibleNewMonth > 11){
@@ -230,7 +230,7 @@ export default function Home() {
       anEvent.data.start.slice(0, 2) === "09" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
       anEvent.data.start.slice(0, 2) === "10" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
       anEvent.data.start.slice(0, 2) === "11" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
-      anEvent.data.start.slice(0, 2) === "12" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
+      anEvent.data.start.slice(0, 2) === "12" ? anEvent.data.start = anEvent.data.start + " " + "PM" :
       console.log("impossible time")
     })
 
@@ -255,7 +255,8 @@ export default function Home() {
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
       <p>Select Date to create Event</p>
-      {thisWeek.map(eachDay => 
+      {thisWeek && thisWeek.map(eachDay => 
+          eachDay.date !== date ? 
           <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
             <div className={styles.card}>
               <h1>{eachDay.date}</h1>
@@ -263,6 +264,15 @@ export default function Home() {
               <h5 className={styles.month}>{eachDay.month}</h5>
             </div>
           </Link>
+          :
+          <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
+            <div style={{backgroundColor: "#1b1e27"}} className={styles.card}>
+              <h1 style={{color: 'white'}}>{eachDay.date}</h1>
+              <h2 style={{color: 'white'}}>{eachDay.dayName}</h2>
+              <h5 className={styles.month}>{eachDay.month}</h5>
+            </div>
+          </Link>
+        
       )}
       <h1 style={{color: "#292E3B"}}>Events</h1>
       {weeksEvents && weeksEvents.map(anEvent =>
