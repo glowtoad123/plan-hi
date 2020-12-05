@@ -8,7 +8,9 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
-  const today = new Date()
+  const [today, setToday] = useState(new Date())
+
+  /* const today = new Date() */
   var month = today.getMonth()
   var possibleNewMonth = month + 1
   var year = today.getFullYear()
@@ -49,7 +51,7 @@ export default function Home() {
       month = 1
     }
   } */
-  
+/////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week  
   for(daysInTheWeek = today.getDate(); daysInTheWeek <= week; daysInTheWeek++){
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
@@ -192,7 +194,7 @@ export default function Home() {
     useEffect(() => {
       setYourId(localStorage.getItem("userID"))
       getData()
-      getYourData(localStorage.getItem("userID"))
+      localStorage.getItem("userID") && getYourData(localStorage.getItem("userID"))
     }, [])
 
     console.log(eventList)
@@ -269,6 +271,7 @@ export default function Home() {
     <faunaProvider>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
+      <input type="date" value="2020-11-04" onChange={(event) => setToday(new Date(event.target.value))} />
       <p>Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
       {thisWeek && thisWeek.map(eachDay => 
           eachDay.date !== date ? 
