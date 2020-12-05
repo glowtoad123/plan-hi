@@ -61,7 +61,7 @@ export default function Create() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({data: {
             event: eventName,
-            date: new Date(Number(eventDate.split("-")[0]), Number(eventDate.split("-")[1]), Number(eventDate.split("-")[2])),
+            date: eventDate,
             month: Number(eventDate.split("-")[1]),
             monthName: monthName,
             day: Number(eventDate.split("-")[2]),
