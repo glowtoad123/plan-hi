@@ -21,6 +21,7 @@ export default function Home() {
   var thisWeeksDayList = []
   var thisWeekMonthList = []
   var weeksEvents = []
+  const [deletedItem, setDeletedItem] = useState("")
 
   
   console.log(today)
@@ -235,6 +236,20 @@ export default function Home() {
 
     weeksEvents.sort(anEvent => anEvent.data.day)
 
+    async function deleteEvent(id){
+      let deleteOption = confirm("do you really want to delete this event?")
+      deleteOption &&
+      await fetch("api/deleteEvent", {
+        method: "POST",
+        headers: {"Content-Type": 'application/json'},
+        body: JSON.stringify({data: id})
+      }).then(() => setDeletedItem(id))
+      .catch(error => console.log(error))
+    }
+
+    console.log("deletedItem: " + deletedItem)
+
+    weeksEvents = weeksEvents.filter(anEvent => anEvent.ref['@ref'].id !== deletedItem)
   return (
     <faunaProvider>
       <Nav />
@@ -257,7 +272,7 @@ export default function Home() {
             <p style={{fontSize: "14px"}}>{anEvent.data.start} - {anEvent.data.end}</p>
             <h5 className={styles.month}>{anEvent.data.monthName}</h5>
             <div style={{justifyContent: "center", display: "flex"}}>
-              <svg className={styles.options} width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <svg onClick={() => deleteEvent(anEvent.ref['@ref'].id)} className={styles.options} width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
               </svg>
               <Link href={`/edit?title=${anEvent.ref['@ref'].id}`}>
