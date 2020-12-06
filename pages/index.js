@@ -275,11 +275,28 @@ export default function Home() {
     //////////////////////////////////////////////////////////////////////////////////////Removes deletedEvent from page without having to refresh
     weeksEvents = weeksEvents.filter(anEvent => anEvent.ref['@ref'].id !== deletedItem)
     //////////////////////////////////////////////////////////////////////////////////////Removes deletedEvent from page without having to refresh
-  return (
+    
+    var day
+    date.toString().length === 1 ? day = "0" + date.toString() : day = date
+
+    const [todayInputValue, setTodayInputValue] = useState(year + "-" + possibleNewMonth + "-" + day)
+
+    console.log("todayInputValue: " + todayInputValue)
+
+    console.log(todayInputValue.split("-")[1])
+    console.log("'" + todayInputValue.split("-")[1] + "-" + todayInputValue.split("-")[2] + "-" + todayInputValue.split("-")[0] + "'")
+    console.log("Test problem: " + new Date("'" + todayInputValue.split("-")[1] + "-" + todayInputValue.split("-")[2] + "-" + todayInputValue.split("-")[0] + "'"))
+ 
+ 
+ 
+    return (
     <>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
-      <input type="date" value="2020-11-04" onChange={(event) => setToday(new Date(event.target.value))} />
+      <input type="date" value={todayInputValue} onChange={(event) => {
+        setToday(new Date("'" + event.target.value.split("-")[1] + "-" + event.target.value.split("-")[2] + "-" + event.target.value.split("-")[0] + "'"))
+        setTodayInputValue(event.target.value)
+      }} />
       <p>Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
       {/*                                   method to highlight current Date                                                    */}
       {thisWeek && thisWeek.map(eachDay => 
