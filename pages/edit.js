@@ -8,6 +8,7 @@ export default function Edit() {
     
     const id = router.query.title
     console.log(id)
+    const [yourEvents, setYourEvents] = useState([])
     const [eventData, setEventData] = useState({})
     const [event, setEvent] = useState(eventData.event)
     const [day, setDay] = useState(eventData.day)
@@ -18,6 +19,7 @@ export default function Edit() {
     const [userId, setUserId] = useState(eventData.userId)
     const [date, setDate] = useState(new Date())
     const [year, setYear] = useState(eventData.year)
+    var openSchedule = true
 
     const requestOptions = {
         method: "POST",
@@ -48,13 +50,17 @@ export default function Edit() {
 
     var startNumPart1
     var startNumPart2
+    var startNum
     start ? startNumPart1 = Number(start.split(":")[0]) : startNumPart1 = 0
     start ? startNumPart2 = Number(start.split(":")[1])/60 : startNumPart2 = 0
+    start ? startNum = startNumPart1 + startNumPart2 : startNum = 0
 
     var endNumPart1
     var endNumPart2
+    var endNum
     end ? endNumPart1 = Number(end.split(":")[0]) : endNumPart1 = 0
     end ? endNumPart2 = Number(end.split(":")[1])/60 : endNumPart2 = 0
+    end ? endNum = endNumPart1 + endNumPart2 : endNum = 0
 
     var sendOptions = {
         method: "POST",
@@ -76,26 +82,52 @@ export default function Edit() {
     }
 
     async function addData(){
-        await fetch("api/updateEvent", sendOptions).then(() => {
+        openSchedule && await fetch("api/updateEvent", sendOptions).then(() => {
             console.log("this is working")
             router.push("/")
         }).catch(e => console.log(e))
     }
+
+    async function getYourData(id){
+        const res = await fetch("api/readYourEvents", {
+          method: "POST",
+          headers: {"Content-Type": 'application/json'},
+          body: JSON.stringify({id: id})
+        })
+        let data = await res.json()
+        console.log(data)
+        setYourEvents(data)
+      }
 
 
     
     useEffect(() => {
         receiveData()
         day && day.toString().length === 1 ? setDate(year + "-" + month + "-" + "0" + day.toString()) : setDate(year + "-" + month + "-" + day)
-        
+        getYourData(localStorage.getItem("userID"))
     }, [])
 
     console.log("event: " + event)
+
+    var filteredEvent
+    yourEvents ? filteredEvent = yourEvents.filter(anEvent => 
+      anEvent.data.day === Number(date.split("-")[2]) && anEvent.data.startNum !== startNum && anEvent.data.endNum !== endNum
+      ) : 
+      filteredEvent = []
+
+      filteredEvent.filter(anEvent =>
+          startNum >= anEvent.data.startNum && startNum <= anEvent.data.endNum || endNum >= anEvent.data.startNum && endNum <= anEvent.data.endNum || (startNum + endNum)/2 >= anEvent.data.startNum && (startNum + endNum)/2 <= anEvent.data.endNum ? openSchedule = false : openSchedule = true    
+      )
+
+      console.log(filteredEvent)
+
+      console.log(openSchedule)
 
 
     return (
         <>
         <Nav />
+        {!openSchedule && <h1>Sorry, but you cannot plan an event because you already have something planned at that time</h1>}
         <div className="eventForm">
             <input type="text" value={event} className="eventNameInput" onChange={event => setEvent(event.target.value)} name="event" placeholder="Event Name"/>
             <br />
