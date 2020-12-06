@@ -46,7 +46,17 @@ export default function Edit() {
 
     console.log(Number(date[8] + date[9]))
 
-    const sendOptions = {
+    var startNumPart1
+    var startNumPart2
+    start ? startNumPart1 = Number(start.split(":")[0]) : startNumPart1 = 0
+    start ? startNumPart2 = Number(start.split(":")[1])/60 : startNumPart2 = 0
+
+    var endNumPart1
+    var endNumPart2
+    end ? endNumPart1 = Number(end.split(":")[0]) : endNumPart1 = 0
+    end ? endNumPart2 = Number(end.split(":")[1])/60 : endNumPart2 = 0
+
+    var sendOptions = {
         method: "POST",
         headers: {"Content-Type": 'application/json'},
         body: JSON.stringify({data: {
@@ -59,6 +69,8 @@ export default function Edit() {
             year: year,
             start: start,
             end: end,
+            startNum: startNumPart1 + startNumPart2,
+            endNum: endNumPart1 + endNumPart2,
             userID: userId
         }})
     }

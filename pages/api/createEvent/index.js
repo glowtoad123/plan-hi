@@ -16,6 +16,8 @@ module.exports = async function(req, res) {
                         date: formData.date,
                         start: formData.start,
                         end: formData.end,
+                        startNum: formData.startNum,
+                        endNum: formData.endNum,
                         userID: formData.userID,
                         month: formData.month,
                         monthName: formData.monthName,

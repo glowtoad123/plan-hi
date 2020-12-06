@@ -293,7 +293,7 @@ export default function Home() {
     <>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
-      <input type="date" value={todayInputValue} onChange={(event) => {
+      <input style={{margin: "auto", display: 'flex', backgroundColor: "#D8DBE2", border: 'none', padding: '10px'}} type="date" value={todayInputValue} onChange={(event) => {
         setToday(new Date("'" + event.target.value.split("-")[1] + "-" + event.target.value.split("-")[2] + "-" + event.target.value.split("-")[0] + "'"))
         setTodayInputValue(event.target.value)
       }} />

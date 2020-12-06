@@ -12,6 +12,7 @@ export function login(email, password) {
                 q.Index('getAccount'), email, password
                 )
         )).then(ret => {
+            localStorage.removeItem("userID")
             account.email = ret.data.email
             account.password = ret.data.password
             account.id = ret.ref.id

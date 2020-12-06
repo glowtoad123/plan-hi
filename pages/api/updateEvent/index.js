@@ -22,6 +22,8 @@ module.exports = async function(req, res) {
                     year: formData.year,
                     start: formData.start,
                     end: formData.end,
+                    startNum: formData.startNum,
+                    endNum: formData.endNum,
                     userID: formData.userID
                 }}
             )

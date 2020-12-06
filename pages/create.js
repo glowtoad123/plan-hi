@@ -7,7 +7,11 @@ export default function Create() {
     const [eventName, setEventName] = useState("")
     const [startEventTime, setStartEventTime] = useState("12:00:00")
     const [endEventTime, setEndEventTime] = useState("14:00:00")
+    const [yourEvents, setYourEvents] = useState([])
+    var numberStart = startEventTime
+    var numberEnd = endEventTime
     const [yourId, setYourId] = useState("")
+    var openSchedule = true
 
     const selectedDateParts = router.query.title.split("_")
     console.log(selectedDateParts)
@@ -49,13 +53,35 @@ export default function Create() {
     Number(month) - 1 === 10 ? monthName = "November" :
     Number(month) - 1 === 11 ? monthName = "December" :
     monthName = "No Month"
-
+    
     console.log(monthName)
 
+    async function getYourData(id){
+        const res = await fetch("api/readYourEvents", {
+          method: "POST",
+          headers: {"Content-Type": 'application/json'},
+          body: JSON.stringify({id: id})
+        })
+        let data = await res.json()
+        console.log(data)
+        setYourEvents(data)
+      }
+    
     useEffect(() => {
         setYourId(localStorage.getItem("userID"))
+        getYourData(localStorage.getItem("userID"))
     }, [])
 
+    var numberStartPart1 = Number(startEventTime.split(":")[0])
+    var numberStartPart2 = Number(startEventTime.split(":")[1])/60
+    numberStart = numberStartPart1 + numberStartPart2
+    console.log(numberStart)
+
+    var numberEndPart2 = Number(endEventTime.split(":")[1])/60
+    var numberEndPart1 = Number(endEventTime.split(":")[0])
+    numberEnd = numberEndPart1 + numberEndPart2
+    console.log(numberEnd)
+    
     const requestOptions = {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -67,22 +93,40 @@ export default function Create() {
             day: Number(eventDate.split("-")[2]),
             year: Number(eventDate.split("-")[0]),
             start: startEventTime,
+            startNum: numberStart,
+            endNum: numberEnd,
             end: endEventTime,
             userID: yourId
         }})
       }
 
     async function addData(){
-      await fetch("api/createEvent", requestOptions).then(() => {
+      openSchedule && await fetch("api/createEvent", requestOptions).then(() => {
           console.log("this is working")
           router.push("/")
         }).catch(e => console.log(e));
     }
 
 
+      var filteredEvent
+      yourEvents ? filteredEvent = yourEvents.filter(anEvent => 
+        anEvent.data.day === Number(eventDate.split("-")[2])
+        ) : 
+        filteredEvent = []
+
+        filteredEvent.filter(anEvent =>
+            numberStart >= anEvent.data.startNum && numberStart <= anEvent.data.endNum || numberEnd >= anEvent.data.startNum && numberEnd <= anEvent.data.endNum || (numberStart + numberEnd)/2 >= anEvent.data.startNum && (numberStart + numberEnd)/2 <= anEvent.data.endNum ? openSchedule = false : openSchedule = true    
+        )
+
+        console.log(filteredEvent)
+
+        console.log(openSchedule)
+
+
     return (
         <>
             <Nav />
+            {!openSchedule && <h1>Sorry, but you cannot plan an event because you already have something planned at that time</h1>}
             <div className="eventForm">
                 <input type="text" value={eventName} className="eventNameInput" onChange={event => setEventName(event.target.value)} name="event" placeholder="Event Name"/>
                 <br />
