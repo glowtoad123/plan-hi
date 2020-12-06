@@ -1,3 +1,5 @@
+#Plan-hi
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -7,10 +9,42 @@ First, run the development server:
 ```bash
 npm run dev
 # or
-yarn dev
+**yarn dev**
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open localhost:3000 on your browser.
+
+##File Structure
+
+When building plan-hi, I was taking my previous experience and learning new methods to create this app. That is why I use some parts from fauna.js in the services folder.
+
+###services
+
+This consists of a function to login, register, and the secret for CRUD functions using FaunaDB as the database.
+
+###Pages
+
+This folder consists of the main pages that you would see
+
+###Components
+
+This folder contains components that the pages would use such as the Navbar and the login/register components in the **enter** page.
+
+###Pages/api
+
+This contains apis used for CRUD functions.
+
+This was something that I wanted to try out. This is why CRUD functions are not in the Fauna.js service (except for logging in and registering).
+
+
+
+##Bugs
+
+Rather than having a traditional calendar view with a grid-like view, I chose to keep the parts that users pay attention to-that being the events and the days of the week.
+
+Keep in mind though that when you are creating a new event or editing an event, data is pulled from the url to the browser in order to set the current date (though the date can be changed). The method I used to pull the data is through NextJS's useRouter api. For some reason, when the browser is refreshed, the data is lost, so please try not to refresh. I am working on fixing this bug.
+
+
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 

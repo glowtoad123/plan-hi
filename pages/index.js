@@ -9,24 +9,29 @@ import styles from '../styles/Home.module.css'
 export default function Home() {
 
   const [today, setToday] = useState(new Date())
-
-  /* const today = new Date() */
   var month = today.getMonth()
+
+  /////////////////////////////////////////////the possibleNewMonth variable is here in case one of the next 6 days of the week is a new month. This way the curent month won't be displayed in place of a new month
   var possibleNewMonth = month + 1
+   /////////////////////////////////////////////the possibleNewMonth variable is here in case one of the next 6 days of the week is a new month. This way the curent month won't be displayed in place of a new month
+
   var year = today.getFullYear()
   var day = today.getDay()
-  const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getUTCMonth())
-  const [yourId, setYourId] = useState("")
+
+  /////////////////////////////////////////////the currentMonth const displays a month from the dateList const. The dateList const contains an array of year objects with the length of each month and information of each year (including leap years)
+  const currentMonth = dateList[today.getFullYear()].filter(property => property.numMonth === today.getMonth())
+  /////////////////////////////////////////////the currentMonth const displays a month from the dateList const. The dateList const contains an array of year objects with the length of each month and information of each year (including leap years)
+  
   const [eventList, setEventList] = useState("")
   const [yourEvents, setYourEvents] = useState([])
   var filteredEvents
-  var thisWeeksYearList = []
-  var thisWeeksDayList = []
-  var thisWeekMonthList = []
   var weeksEvents = []
-  const [deletedItem, setDeletedItem] = useState("")
 
-  
+  ///////////////////////////////////////////////Allows page to update without refreshing the page when user deletes an event
+  const [deletedItem, setDeletedItem] = useState("")
+  ///////////////////////////////////////////////Allows page to update without refreshing the page when user deletes an event
+
+  ///////////////////////////////////////////////////Because I make alot of changes to this page, I always console.log my variables to make sure that everything is working and for debugging purposes you will be seeing these many times throughout this project
   console.log(today)
   console.log(today.getFullYear())
   console.log(today.getMonth())
@@ -36,8 +41,6 @@ export default function Home() {
   const date = today.getDate()
   var daysInTheWeek
   const week = date + 6
-  var lastDay
-  var brandnewMonth
   var thisWeek = []
 
   console.log(date)
@@ -51,7 +54,7 @@ export default function Home() {
       month = 1
     }
   } */
-/////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week  
+/////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week
   for(daysInTheWeek = today.getDate(); daysInTheWeek <= week; daysInTheWeek++){
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
@@ -134,50 +137,66 @@ export default function Home() {
       })
     }
   }
+
+/////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week
   
   console.log(today)
   console.log(currentMonth[0].length)
   console.log(thisWeek)
-  
-  const results = thisWeek.map(thatWeek => 
-    dateList[thatWeek.year].filter(property => 
-      thatWeek.month === property.numMonth
-      )
-      )
+
+
+
+
+  //////////////////////////////////////////////filters data from dateList that matches the year and month of thisWeek
+  const results = thisWeek.map(dayInWeek => 
+    dateList[dayInWeek.year].filter(property => 
+      dayInWeek.month === property.numMonth
+    )
+  )
+
+  //////////////////////////////////////////////filters data from dateList that matches the year and month of thisWeek
+
       
   console.log(results)
   
-
-  thisWeek.map(thatWeek => console.log(thatWeek.year))
-
+  //////////////////////////////////////////////Testing purposes
+  thisWeek.map(dayInWeek => console.log(dayInWeek.year))
+  
   const testDate = new Date(thisWeek[1].year, thisWeek[1].month, thisWeek[1].date)
   console.log(testDate)
+  //////////////////////////////////////////////Testing purposes
 
-  /* results.map(eachOne => thisWeek.map(thatWeek => eachOne.map(one => one.date = thatWeek.date))) */
-  thisWeek.map(thatWeek => results.map(eachOne => eachOne.filter(one => thatWeek.month === one.numMonth && thatWeek.year === one.year && (
-    thatWeek.month = one.month,
-    thatWeek.numMonth = one.numMonth,
-    thatWeek.length = one.length
+  //////////////////////////////////////////////Pulls data from filtered data (const results) and puts the data into thisWeek
+  thisWeek.map(dayInWeek => results.map(eachOne => eachOne.filter(one => dayInWeek.month === one.numMonth && dayInWeek.year === one.year && (
+    dayInWeek.month = one.month,
+    dayInWeek.numMonth = one.numMonth,
+    dayInWeek.length = one.length
   ))))
+  //////////////////////////////////////////////Pulls data from filtered data (const results) and puts the data into thisWeek
   
-  thisWeek.forEach(thatWeek => thatWeek.day === 0 ? thatWeek.dayName = "Sun" : 
-  thatWeek.day === 1 ? thatWeek.dayName = "Mon" :
-    thatWeek.day === 2 ? thatWeek.dayName = "Tues" : 
-    thatWeek.day === 3 ? thatWeek.dayName = "Wed" : 
-    thatWeek.day === 4 ? thatWeek.dayName = "Thu" : 
-    thatWeek.day === 5 ? thatWeek.dayName = "Fri" : 
-    thatWeek.day === 6 ? thatWeek.dayName = "Sat" :
-    thatWeek.dayName = "day"
+  ////////////////////////////////////////////////////////////////////////////////Method of finding determing which day it is
+  thisWeek.forEach(dayInWeek => dayInWeek.day === 0 ? dayInWeek.dayName = "Sun" : 
+  dayInWeek.day === 1 ? dayInWeek.dayName = "Mon" :
+    dayInWeek.day === 2 ? dayInWeek.dayName = "Tues" : 
+    dayInWeek.day === 3 ? dayInWeek.dayName = "Wed" : 
+    dayInWeek.day === 4 ? dayInWeek.dayName = "Thu" : 
+    dayInWeek.day === 5 ? dayInWeek.dayName = "Fri" : 
+    dayInWeek.day === 6 ? dayInWeek.dayName = "Sat" :
+    dayInWeek.dayName = "day"
     )
+  ////////////////////////////////////////////////////////////////////////////////Method of finding determing which day it is
     
     console.log(thisWeek)
 
-    async function getData() {
+  //////////////////////////////////////////////This was before I created an api that pulls events from the users account. This api method returns the events of every single user
+/*     async function getData() {
       const res = await fetch("api/readEvents")
       let data = await res.json()
       setEventList(data)
-    }
+    } */
+  //////////////////////////////////////////////This was before I created an api that pulls events from the users account. This api method returns the events of every single user
 
+  //////////////////////////////////////////////////////This api method only returns the events of the user
     async function getYourData(id){
       const res = await fetch("api/readYourEvents", {
         method: "POST",
@@ -188,53 +207,37 @@ export default function Home() {
       console.log(data)
       setYourEvents(data)
     }
+  //////////////////////////////////////////////////////This api method only returns the events of the user
 
     console.log(yourEvents)
     
+  ////////////////////////////////////////////////////////////////////////////////////After all of the components on the page loads, the page will check if the current user is loggedin and will get the events of that user (please refresh the page first. There is a bug that displays the events of the previous user unless the user refreshes the page. I am working on this bug)
     useEffect(() => {
-      setYourId(localStorage.getItem("userID"))
-      getData()
       localStorage.getItem("userID") && getYourData(localStorage.getItem("userID"))
     }, [])
+  ////////////////////////////////////////////////////////////////////////////////////After all of the components on the page loads, the page will check if the current user is loggedin and will get the events of that user (please refresh the page first. There is a bug that displays the events of the previous user unless the user refreshes the page. I am working on this bug)
 
-    console.log(eventList)
+  ///////////////////////////////////////////////////////////////////////////////////////Filters the events and returns events that are planned for thisWeek
+    yourEvents ? filteredEvents = thisWeek.map(dayInWeek => yourEvents.filter(anEvent => 
+      anEvent.data.monthName === dayInWeek.month && anEvent.data.year === dayInWeek.year && anEvent.data.day === dayInWeek.date)) : filteredEvents = []
+    ///////////////////////////////////////////////////////////////////////////////////////Filters the events and returns events that are planned for thisWeek
 
-    /* eventList ? thisWeek.map(thatWeek => eventList.filter(anEvent => anEvent.year === thatWeek.year)) : filteredEvents = [] */
-    /* eventList ? eventList.filter(anEvent => thisWeek.map(thatWeek => anEvent.data.year === thatWeek.year)) : filteredEvents = [] */
-    
-    /* eventList ? filteredEvents = eventList.filter(anEvent => anEvent.data.year === 2019) : filteredEvents = [] */
-
-    thisWeek.map(thatWeek => {
-      thisWeeksYearList.push(thatWeek.year)
-      thisWeeksDayList.push(thatWeek.day)
-      thisWeekMonthList.push(thatWeek.month)
-    })
-
-    console.log(thisWeeksYearList)
-
-/*     eventList ? filteredEvents = thisWeeksYearList.map(year => eventList.filter(anEvent => {
-      year === anEvent.data.year
-
-    })) : filteredEvents = [] */
-
-    yourEvents ? filteredEvents = thisWeek.map(thatWeek => yourEvents.filter(anEvent => 
-      anEvent.data.monthName === thatWeek.month && anEvent.data.year === thatWeek.year && anEvent.data.day === thatWeek.date)) : filteredEvents = []
 
     console.log(filteredEvents)
+
+    ///////////////////////////////////////////////////////////////////Because the filteredEvents is a Nested Array, each event needs to be put into one array. That new array is called weeksEvents
     filteredEvents.map(one => one.map(each => weeksEvents.push(each)))
-    /* console.log(testArray)
+    ///////////////////////////////////////////////////////////////////Because the filteredEvents is a Nested Array, each event needs to be put into one array. That new array is called weeksEvents
     
-    filteredEvents = filteredEvents.slice(0, 1)
-    filteredEvents.map(one => one.map(each => weeksEvents.push(each))) */
 
     console.log(weeksEvents)
     console.log(filteredEvents)
-    console.log(eventList)
-
-    const tryIt = "@ref"
-    
+    /////////////////////////////////////////////////////////////////Testing method to see if I can display the id of each event
     weeksEvents.map(anEvent => console.log(anEvent.ref['@ref'].id))
+    /////////////////////////////////////////////////////////////////Testing method to see if I can display the id of each event
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////Method to assign each start time as an event in AM if they are before noon. However I did not make a method for PM besides noon
     weeksEvents.map(anEvent => {
       anEvent.data.start.slice(0, 2) === "01" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
       anEvent.data.start.slice(0, 2) === "02" ? anEvent.data.start = anEvent.data.start + " " + "AM" :
@@ -250,9 +253,11 @@ export default function Home() {
       anEvent.data.start.slice(0, 2) === "12" ? anEvent.data.start = anEvent.data.start + " " + "PM" :
       console.log("impossible time")
     })
+    ///////////////////////////////////////////////////////////////////////////////////////////////////Method to assign each start time as an event in AM if they are before noon. However I did not make a method for PM besides noon
 
     weeksEvents.sort(anEvent => anEvent.data.day)
 
+    /////////////////////////////////////////////////////////////////////////api method to delete event
     async function deleteEvent(id){
       let deleteOption = confirm("do you really want to delete this event?")
       deleteOption &&
@@ -263,16 +268,20 @@ export default function Home() {
       }).then(() => setDeletedItem(id))
       .catch(error => console.log(error))
     }
+    /////////////////////////////////////////////////////////////////////////api method to delete event
 
     console.log("deletedItem: " + deletedItem)
 
+    //////////////////////////////////////////////////////////////////////////////////////Removes deletedEvent from page without having to refresh
     weeksEvents = weeksEvents.filter(anEvent => anEvent.ref['@ref'].id !== deletedItem)
+    //////////////////////////////////////////////////////////////////////////////////////Removes deletedEvent from page without having to refresh
   return (
-    <faunaProvider>
+    <>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
       <input type="date" value="2020-11-04" onChange={(event) => setToday(new Date(event.target.value))} />
       <p>Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
+      {/*                                   method to highlight current Date                                                    */}
       {thisWeek && thisWeek.map(eachDay => 
           eachDay.date !== date ? 
           <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
@@ -292,6 +301,8 @@ export default function Home() {
           </Link>
         
       )}
+      {/*                                   method to highlight current Date                                                    */}
+
       <h1 style={{color: "#292E3B"}}>Events</h1>
       {weeksEvents && weeksEvents.map(anEvent =>
           <div style={{verticalAlign: "middle"}} className={styles.eventCard}>
@@ -317,6 +328,6 @@ export default function Home() {
       <br />
       <br />
       <br />
-    </faunaProvider>
+    </>
   )
 }
