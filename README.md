@@ -1,4 +1,4 @@
-#Plan-hi
+# Plan-hi
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -14,23 +14,23 @@ npm run dev
 
 Open localhost:3000 on your browser.
 
-##File Structure
+## File Structure
 
 When building plan-hi, I was taking my previous experience and learning new methods to create this app. That is why I use some parts from fauna.js in the services folder.
 
-###services
+### services
 
 This consists of a function to login, register, and the secret for CRUD functions using FaunaDB as the database.
 
-###Pages
+### Pages
 
 This folder consists of the main pages that you would see
 
-###Components
+### Components
 
 This folder contains components that the pages would use such as the Navbar and the login/register components in the **enter** page.
 
-###Pages/api
+### Pages/api
 
 This contains apis used for CRUD functions.
 
@@ -38,7 +38,7 @@ This was something that I wanted to try out. This is why CRUD functions are not 
 
 
 
-##Bugs
+## Bugs
 
 Rather than having a traditional calendar view with a grid-like view, I chose to keep the parts that users pay attention to-that being the events and the days of the week.
 
