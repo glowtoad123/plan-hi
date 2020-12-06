@@ -293,11 +293,12 @@ export default function Home() {
     <>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
-      <input style={{margin: "auto", display: 'flex', backgroundColor: "#D8DBE2", border: 'none', padding: '10px'}} type="date" value={todayInputValue} onChange={(event) => {
+      <input className={styles.dateSelector} type="date" value={todayInputValue} onChange={(event) => {
         setToday(new Date("'" + event.target.value.split("-")[1] + "-" + event.target.value.split("-")[2] + "-" + event.target.value.split("-")[0] + "'"))
         setTodayInputValue(event.target.value)
       }} />
-      <p>Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
+      
+      <p>login/register and then Select any Date to create an Event (You can change the date of your event so feel free to select any date shown below)</p>
       {/*                                   method to highlight current Date                                                    */}
       {thisWeek && thisWeek.map(eachDay => 
           eachDay.date !== date ? 

@@ -188,6 +188,28 @@
   display: inline-flex
 }
 
+.dateSelector {
+  margin: auto;
+  display: flex; 
+  background-color: #D8DBE2;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  font-size: 24px;
+  text-align: center;
+}
+
+.dateSelector:hover {
+  box-shadow: 10px 15px 4px rgba(0, 0, 0, 0.25);
+}
+
+.dateSelector:active {
+  background-color: #1b1e27;
+  color: white
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
