@@ -2,9 +2,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Nav from '../components/nav'
 
-export default function Edit({id}) {
+export default function Edit() {
 
     const router = useRouter()
+    
+    const id = router.query.title
     console.log(id)
     const [yourEvents, setYourEvents] = useState([])
     const [eventData, setEventData] = useState({})
@@ -139,11 +141,4 @@ export default function Edit({id}) {
         </div>
     </>
     )
-}
-
-export async function getServerSideProps(context){
-
-    return {props: {
-        id: context.query.title
-    }}
 }

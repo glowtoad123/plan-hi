@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Nav from '../components/nav'
 
-export default function Create({thisMonth, thisYear, thisDay}) {
+export default function Create() {
     const router = useRouter()
     const [eventName, setEventName] = useState("")
     const [startEventTime, setStartEventTime] = useState("12:00:00")
@@ -13,18 +13,31 @@ export default function Create({thisMonth, thisYear, thisDay}) {
     const [yourId, setYourId] = useState("")
     var openSchedule = true
 
-    var testDate = new Date(thisYear, thisMonth, thisDay)
-    var day = thisDay
-    if(day && day.length === 1){
+    const title = router.query.title
+
+    console.log({
+        year: router.query.year,
+        month: router.query.month,
+        day: router.query.day
+    })
+    var selectedDateParts = title
+    selectedDateParts ? selectedDateParts = selectedDateParts.split("_") : selectedDateParts = ""
+    console.log(selectedDateParts)
+
+    var testDate 
+    selectedDateParts ? testDate = new Date(selectedDateParts[2], selectedDateParts[0], selectedDateParts[1]) : testDate = new Date()
+    var day 
+    selectedDateParts ? day = selectedDateParts[1].toString() : day = ""
+    if(day.length === 1){
         let zero = "0" + day
         day = "0" + day
     }
 
-    var actualMonth = Number(thisMonth) + 1
+    var actualMonth = Number(selectedDateParts[0]) + 1
 
     console.log("actualMonth: " + actualMonth)
     
-    const selectedDate = thisYear + "-" + actualMonth.toString() + "-" + day
+    const selectedDate = selectedDateParts[2] + "-" + actualMonth.toString() + "-" + day
     console.log("selectedDate:", selectedDate)
     console.log(testDate)
 
@@ -82,29 +95,12 @@ export default function Create({thisMonth, thisYear, thisDay}) {
     numberEnd = numberEndPart1 + numberEndPart2
     console.log(numberEnd)
     
-    var requestOptions
-    eventDate && eventDate !== "undefined-NaN-undefined" ? requestOptions = {
+    const requestOptions = {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({data: {
             event: eventName,
             date: eventDate,
-            month: Number(eventDate.split("-")[1]),
-            monthName: monthName,
-            day: Number(eventDate.split("-")[2]),
-            year: Number(eventDate.split("-")[0]),
-            start: startEventTime,
-            startNum: numberStart,
-            endNum: numberEnd,
-            end: endEventTime,
-            userID: yourId
-        }})
-      } : requestOptions = {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({data: {
-            event: eventName,
-            date: selectedDate,
             month: Number(eventDate.split("-")[1]),
             monthName: monthName,
             day: Number(eventDate.split("-")[2]),
@@ -157,15 +153,4 @@ export default function Create({thisMonth, thisYear, thisDay}) {
             </div>
         </>
     )
-}
-
-
-
-export async function getServerSideProps(context){
-
-    return {props: {
-        thisMonth: context.query.month,
-        thisYear: context.query.year,
-        thisDay: context.query.day
-    }}
 }

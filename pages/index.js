@@ -302,15 +302,17 @@ export default function Home() {
       {/*                                   method to highlight current Date                                                    */}
       {thisWeek && thisWeek.map(eachDay => 
           eachDay.date !== date ? 
-          <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
-            <div className={styles.card}>
-              <h1>{eachDay.date}</h1>
-              <h2>{eachDay.dayName}</h2>
-              <h5 className={styles.month}>{eachDay.month}</h5>
-            </div>
+          <Link href={{pathname: '/create', query: { year: eachDay.year, month: eachDay.numMonth, day: eachDay.date}}}>
+            <a href="/create">
+              <div className={styles.card}>
+                <h1>{eachDay.date}</h1>
+                <h2>{eachDay.dayName}</h2>
+                <h5 className={styles.month}>{eachDay.month}</h5>
+              </div>
+            </a>
           </Link>
           :
-          <Link href={`/create?title=${eachDay.numMonth}_${eachDay.date}_${eachDay.year}`}>
+          <Link href={{pathname: '/create', query: { year: eachDay.year, month: eachDay.numMonth, day: eachDay.date}}}>
             <div style={{backgroundColor: "#1b1e27"}} className={styles.card}>
               <h1 style={{color: 'white'}}>{eachDay.date}</h1>
               <h2 style={{color: 'white'}}>{eachDay.dayName}</h2>
@@ -325,7 +327,7 @@ export default function Home() {
       {weeksEvents && weeksEvents.map(anEvent =>
           <div style={{verticalAlign: "middle"}} className={styles.eventCard}>
             <h2>{anEvent.data.day}</h2>
-            <p style={{fontSize: "14px"}}>{anEvent.data.event}</p>
+            <Link href={`/test?title=${anEvent.ref['@ref'].id}`}><p style={{fontSize: "14px"}}>{anEvent.data.event}</p></Link>
             <p style={{fontSize: "14px"}}>{anEvent.data.start} - {anEvent.data.end}</p>
             <h5 className={styles.month}>{anEvent.data.monthName}</h5>
             <div style={{justifyContent: "center", display: "flex"}}>
