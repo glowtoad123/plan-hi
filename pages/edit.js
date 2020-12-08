@@ -4,6 +4,7 @@ import Nav from '../components/nav'
 
 export default function Edit({id}) {
 
+    const router = useRouter()
     console.log(id)
     const [yourEvents, setYourEvents] = useState([])
     const [eventData, setEventData] = useState({})
