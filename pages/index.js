@@ -42,8 +42,9 @@ export default function Home() {
   var daysInTheWeek
   const week = date + 6
   var thisWeek = []
-
+  
   console.log(date)
+  console.log("this new Date: ", new Date(("'" + year + "-" + month + "-" + date + "'").split('-')))
   
   /*   if(currentMonth[0].length === 31 && week > 31) {
     lastDay = week - 31
@@ -54,7 +55,7 @@ export default function Home() {
       month = 1
     }
   } */
-/////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week
+  /////////////////////////////////////////////////////////////////////////////////Method of determining the next 6 days of the week
   for(daysInTheWeek = today.getDate(); daysInTheWeek <= week; daysInTheWeek++){
     let newDay = day++
     if(currentMonth[0].length === 31 && daysInTheWeek > 31){
@@ -294,7 +295,7 @@ export default function Home() {
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
       <input className={styles.dateSelector} type="date" value={todayInputValue} onChange={(event) => {
-        setToday(new Date("'" + event.target.value.split("-")[1] + "-" + event.target.value.split("-")[2] + "-" + event.target.value.split("-")[0] + "'"))
+        setToday(new Date(event.target.value.split("-")))
         setTodayInputValue(event.target.value)
       }} />
       
