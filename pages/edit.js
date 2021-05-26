@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import * as localForage from 'localforage'
 import Nav from '../components/nav'
 
 export default function Edit({id}) {
@@ -97,12 +98,16 @@ export default function Edit({id}) {
         setYourEvents(data)
       }
 
+      async function getId(){
+        let userID = await localForage.getItem('userID').then(value => value).catch(err => console.log(err)).finally(() => console.log("nothing"))
+        getYourData(userID)
+      }
 
     
     useEffect(() => {
+        getId()
         receiveData()
         day && day.toString().length === 1 ? setDate(year + "-" + month + "-" + "0" + day.toString()) : setDate(year + "-" + month + "-" + day)
-        getYourData(localStorage.getItem("userID"))
     }, [])
 
     console.log("event: " + event)

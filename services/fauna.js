@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState } from 'react'
 import faunadb, { Client, query } from 'faunadb'
+import * as localForage from 'localforage'
 
 const q = query
 const client = new Client({secret: 'fnAD78kV2eACAgU-gPzu-xXGDI8vFW0M8GsLREYY'})
 const account = {}
-
 export function login(email, password) {
     try {
         const dbs = client.query(q.Get(
@@ -12,11 +12,11 @@ export function login(email, password) {
                 q.Index('getAccount'), email, password
                 )
         )).then(ret => {
-            localStorage.removeItem("userID")
+            localForage.removeItem("userID")
             account.email = ret.data.email
             account.password = ret.data.password
             account.id = ret.ref.id
-            localStorage.setItem("userID", ret.ref.id)
+            localForage.setItem("userID", ret.ref.id)
             /* document.cookie = `userId=${ret.ref.id}` */
         })
     } catch(error) {
@@ -38,7 +38,7 @@ export function register(email, password) {
                 account.email = ret.data.email
                 account.password = ret.data.password
                 account.id = ret.ref.id
-                localStorage.setItem("userID", ret.ref.id)
+                localForage.setItem("userID", ret.ref.id)
                 /* document.cookie = `userId=${ret.ref.id}` */
             })
         } catch(error) {

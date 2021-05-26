@@ -19,7 +19,7 @@ export default function Enter(){
                 settingPassword={event => setPassword(event.target.value)}
                 authenticate={() => {
                     login(email, password)
-                    router.push("/")
+                    router.push("/signing")
                 }}
                 password={password}
                 email={email}
@@ -29,7 +29,7 @@ export default function Enter(){
                 settingPassword={event => setPassword(event.target.value)}
                 authenticate={() => {
                     register(email, password)
-                    router.push("/")
+                    router.push("/signing")
                 }}
                 email={email}
                 password={password}

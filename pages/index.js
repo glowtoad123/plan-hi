@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import * as localForage from 'localforage'
 import { dateList } from '../components/microcomponents/dates'
 import Nav from '../components/nav'
 import { Fauna, login, register, secret } from '../services/fauna'
@@ -213,8 +214,16 @@ export default function Home() {
     console.log(yourEvents)
     
   ////////////////////////////////////////////////////////////////////////////////////After all of the components on the page loads, the page will check if the current user is loggedin and will get the events of that user (please refresh the page first. There is a bug that displays the events of the previous user unless the user refreshes the page. I am working on this bug)
+    
+    async function getId(){
+      let userID = await localForage.getItem("userID").then(value => value)
+      getYourData(userID)
+      return userID
+    }
+  
     useEffect(() => {
-      localStorage.getItem("userID") && getYourData(localStorage.getItem("userID"))
+      getId()
+      localForage.getItem("userID").then(value => console.log("userID", value))
     }, [])
   ////////////////////////////////////////////////////////////////////////////////////After all of the components on the page loads, the page will check if the current user is loggedin and will get the events of that user (please refresh the page first. There is a bug that displays the events of the previous user unless the user refreshes the page. I am working on this bug)
 
@@ -314,7 +323,7 @@ export default function Home() {
           </Link>
           :
           <Link href={{pathname: '/create', query: { year: eachDay.year, month: eachDay.numMonth, day: eachDay.date}}}>
-            <div style={{backgroundColor: "#1b1e27"}} className={styles.card}>
+            <div style={{backgroundColor: "#1b1e27", cursor: "pointer"}} className={styles.card}>
               <h1 style={{color: 'white'}}>{eachDay.date}</h1>
               <h2 style={{color: 'white'}}>{eachDay.dayName}</h2>
               <h5 className={styles.month}>{eachDay.month}</h5>

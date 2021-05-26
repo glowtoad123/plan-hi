@@ -1,0 +1,29 @@
+<svg width="32" height="32" version="1.1" viewBox="0 0 8.4667 8.4667" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="filter5577" x="-.41987" y="-.29698" width="2.073" height="1.7589" color-interpolation-filters="sRGB">
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".25098" result="flood"/>
+   <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite1" result="blur" stdDeviation="0.1"/>
+   <feOffset dx="0.4" dy="0.4" result="offset"/>
+   <feComposite in="SourceGraphic" in2="offset" result="fbSourceGraphic"/>
+   <feColorMatrix in="fbSourceGraphic" result="fbSourceGraphicAlpha" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"/>
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".25098" in="fbSourceGraphic" result="flood"/>
+   <feComposite in="flood" in2="fbSourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite1" result="blur" stdDeviation="0.4"/>
+   <feOffset dx="0.4" dy="0.4" result="offset"/>
+   <feComposite in="fbSourceGraphic" in2="offset" result="fbSourceGraphic"/>
+   <feColorMatrix in="fbSourceGraphic" result="fbSourceGraphicAlpha" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"/>
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".25098" in="fbSourceGraphic" result="flood"/>
+   <feComposite in="flood" in2="fbSourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite1" result="blur" stdDeviation="0.4"/>
+   <feOffset dx="0.4" dy="0.4" result="offset"/>
+   <feComposite in="fbSourceGraphic" in2="offset" result="composite2"/>
+  </filter>
+ </defs>
+ <rect x="1.4611" y=".3967" width="5.1445" height="7.2733" rx=".6386" ry=".6386" fill="#d8dbe2" fill-rule="evenodd" filter="url(#filter5577)" stroke-linecap="square" stroke-linejoin="round" stroke-width=".026458"/>
+ <g font-family="'Segoe UI'" stroke-width=".26458">
+  <text x="1.7255872" y="2.789968" font-size="2.9104px" style="line-height:1.25" xml:space="preserve"><tspan x="1.7255872" y="2.789968" fill="#292e3b" font-family="'Segoe UI'" font-size="2.9104px" stroke-width=".26458">9</tspan></text>
+  <text x="3.3443689" y="7.3722525" font-size=".52917px" style="line-height:1.25" xml:space="preserve"><tspan x="3.3443689" y="7.3722525" fill="#a7b4c9" font-family="'Segoe UI'" font-size=".52917px" font-weight="bold" stroke-width=".26458">Plan-hi</tspan></text>
+  <text x="1.404035" y="5.2536941" font-size="1.0583px" style="line-height:1.25" xml:space="preserve"><tspan x="1.404035" y="5.2536941" fill="#292e3b" font-family="'Segoe UI'" font-size="1.0583px" font-weight="bold" stroke-width=".26458">Wed</tspan></text>
+ </g>
+</svg>
