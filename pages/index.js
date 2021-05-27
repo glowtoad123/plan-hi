@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import * as localForage from 'localforage'
 import { dateList } from '../components/microcomponents/dates'
@@ -301,6 +302,11 @@ export default function Home() {
  
     return (
     <>
+      <Head>
+        <title>Plan-hi</title>
+        <link rel="icon" href="/favicon.svg" />
+        <meta name="Description" content="This was my take on the Coding Challenge that a startup made"></meta>
+      </Head>
       <Nav />
       <h1 style={{color: "#292E3B"}}>Dashboard</h1>
       <input className={styles.dateSelector} type="date" value={todayInputValue} onChange={(event) => {
